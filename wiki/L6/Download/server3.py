@@ -55,21 +55,21 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 Handler = testHTTPRequestHandler
 
 # -- Configurar el socket del servidor, para esperar conexiones de clientes
-with socketserver.TCPServer(("", PORT), Handler) as httpd:
-    print("serving at port", PORT)
+httpd = socketserver.TCPServer(("", PORT), Handler)
+print("serving at port", PORT)
 
-    # Entrar en el bucle principal
-    # Las peticiones se atienden desde nuestro manejador
-    # Cada vez que se ocurra un "GET" se invoca al metodo do_GET de
-    # nuestro manejador
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        print("")
-        print("Interrumpido por el usuario")
+# Entrar en el bucle principal
+# Las peticiones se atienden desde nuestro manejador
+# Cada vez que se ocurra un "GET" se invoca al metodo do_GET de
+# nuestro manejador
+try:
+    httpd.serve_forever()
+except KeyboardInterrupt:
+    print("")
+    print("Interrumpido por el usuario")
 
 print("")
 print("Servidor parado")
-
+httpd.close()
 
 # https://github.com/joshmaker/simple-python-webserver/blob/master/server.py
